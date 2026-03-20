@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.5/dist/css/bulma-slider.min.css">
+
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/js/bulma-carousel.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.5/dist/js/bulma-slider.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+
+  <style>
+    .hero .publication-title {
+      line-height: 1.15;
+    }
+    .soft-box {
+      background: #fbfbfc;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      height: 100%;
+    }
+    .soft-box p:last-child { margin-bottom: 0; }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+      height: 100%;
+      box-shadow: 0 8px 24px rgba(10,10,10,0.04);
+    }
+    .stat-card .num {
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+    .mini-label {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .dataset-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .pill {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      background: #fff;
+      font-size: 0.92rem;
+    }
+    .stage-card {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      background: #fff;
+      height: 100%;
+    }
+    .placeholder-figure {
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f7f7f8 0%, #eceef2 100%);
+      border: 1px solid rgba(0,0,0,0.08);
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.25rem;
+      color: #6b7280;
+    }
+    .placeholder-figure.tall {
+      min-height: 300px;
+    }
+    .dataset-showcase-wrap,
+    .dm-slider-wrap {
+      position: relative;
+      padding: 0 2.75rem;
+      box-sizing: border-box;
+      margin-top: 1rem;
+    }
+    .dataset-showcase,
+    .dm-slider {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0.35rem 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .dataset-showcase::-webkit-scrollbar,
+    .dm-slider::-webkit-scrollbar {
+      display: none;
+    }
+    .showcase-card,
+    .dm-card {
+      flex: 0 0 auto;
+      width: 320px;
+    }
+    .showcase-figure,
+    .dm-figure {
+      width: 100%;
+      height: 210px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .showcase-figure img,
+    .dm-figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+    .showcase-body,
+    .dm-cap {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: #616161;
+    }
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.96);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      user-select: none;
+    }
+    .slider-nav.left { left: 0.25rem; }
+    .slider-nav.right { right: 0.25rem; }
+    pre code { white-space: pre-wrap; }
+
+    @media (max-width: 1024px){
+      .dataset-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 768px){
+      .dataset-grid { grid-template-columns: 1fr; }
+      .showcase-card, .dm-card { width: 280px; }
+      .showcase-figure, .dm-figure { height: 190px; }
+      .dataset-showcase-wrap, .dm-slider-wrap { padding: 0 2.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Authors</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Affiliations will be updated.</span>
+          </div>
+
+          <div class="is-size-6" style="margin-top: 0.5rem;">
+            <span class="tag is-light">Anonymous Submission</span>
+            <span class="tag is-light">Mental Health • Multimodal Stimuli • Differential Diagnosis</span>
+          </div>
+
+          <div class="column has-text-centered" style="margin-top: 1rem;">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./assets/placeholder_paper_link.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/placeholder-id" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/placeholder/repo" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://example.com/mmh-dataset" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="far fa-images"></i></span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="teaser-img" style="margin-top: 1.25rem;">
+            <img src="./assets/placeholder_teaser_mmh.png"
+                 alt="Teaser placeholder for MMH project page."
+                 style="max-width:64%;height:auto;border-radius:12px;border:1px solid rgba(0,0,0,0.08);" />
+            <p class="is-size-7 has-text-grey" style="margin-top:0.65rem; max-width: 840px; margin-left:auto; margin-right:auto;">
+              A psychology-inspired multimodal stimulus paradigm supports differential detection of depression, anxiety, and schizophrenia,
+              while a paradigm-aware framework aligns video, audio, and text with prompt-guided semantic supervision.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We study <b>differential mental disorder detection</b> under clinically realistic settings where depression, anxiety,
+            and schizophrenia may present overlapping symptoms. To move beyond interview-only or reading-only protocols,
+            this work introduces a <b>psychology-inspired multimodal stimulus paradigm</b> and constructs the <b>MMH dataset</b>,
+            a clinically verified benchmark with synchronized video, audio, and text. We further propose a <b>paradigm-aware multimodal framework</b>
+            that uses prompt-guided semantic descriptions for pretraining and cross-modal interaction for final multi-disorder classification.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">MMH Dataset</h2>
+    <div class="columns is-multiline is-centered" style="margin-top:0.2rem;">
+      <div class="column is-3-desktop is-6-tablet">
+        <div class="stat-card">
+          <div class="num">535</div>
+          <div class="mini-label">Participants</div>
+        </div>
+      </div>
+      <div class="column is-3-desktop is-6-tablet">
+        <div class="stat-card">
+          <div class="num">13,910</div>
+          <div class="mini-label">Video Segments</div>
+        </div>
+      </div>
+      <div class="column is-3-desktop is-6-tablet">
+        <div class="stat-card">
+          <div class="num">8,560</div>
+          <div class="mini-label">Audio-Text Pairs</div>
+        </div>
+      </div>
+      <div class="column is-3-desktop is-6-tablet">
+        <div class="stat-card">
+          <div class="num">4</div>
+          <div class="mini-label">Classes: Healthy / MD / ANX / SC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pill-row">
+      <span class="pill">Healthy Controls: 307</span>
+      <span class="pill">Depression: 67</span>
+      <span class="pill">Anxiety: 112</span>
+      <span class="pill">Schizophrenia: 49</span>
+      <span class="pill">Avg. Segment Length: 24.14 s</span>
+      <span class="pill">Avg. Words per Sample: 154.41</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Psychology-Inspired Stimulus Design</h2>
+    <div class="columns is-multiline">
+      <div class="column is-12">
+        <div class="soft-box">
+          <p>
+            The dataset is built around <b>five elicitation tasks</b> designed to cover affective induction, auditory perception,
+            controlled speech, social-emotional cognition, and structured interaction.
+          </p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Task 1 · Multi-modal Stimulation I (MS-I)</b></p>
+          <p>Happy, neutral, sad, and scared affective clips with synchronized image-audio stimuli.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Task 2 · Unimodal Stimulation (US)</b></p>
+          <p>Audio-only emotional stimuli across low, middle, and high frequency groups.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Task 3 · Text Reading</b></p>
+          <p>Controlled reading of negative-emotion text to capture vocal expressiveness and fluency.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Task 4 · Multi-modal Stimulation II (MS-II)</b></p>
+          <p>Positive, neutral, and negative videos for higher-level affective and social cognition.</p>
+        </div>
+      </div>
+      <div class="column is-12">
+        <div class="soft-box">
+          <p><b>Task 5 · Human–Computer Interview</b></p>
+          <p>15 standardized questions covering emotional state, self-perception, behavioral intention, and anxiety detection.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset-showcase">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Dataset Showcase</h2>
+    <p class="has-text-centered has-text-grey is-size-7">
+      Horizontal placeholder gallery for future dataset visualizations, sample interfaces, waveform views, or task examples.
+    </p>
+
+    <div class="dataset-showcase-wrap">
+      <button class="slider-nav left" type="button" aria-label="Scroll left" onclick="scrollByCard('dataset-showcase-slider', -1)">&#8249;</button>
+
+      <div class="dataset-showcase" id="dataset-showcase-slider">
+        <div class="showcase-card">
+          <div class="showcase-figure">
+            <img src="./assets/placeholder_dataset_task1.png" alt="Placeholder for Task 1 examples">
+          </div>
+          <div class="showcase-body"><b>Placeholder A</b><br>Task 1 multimodal stimulation samples.</div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-figure">
+            <img src="./assets/placeholder_dataset_task2.png" alt="Placeholder for Task 2 examples">
+          </div>
+          <div class="showcase-body"><b>Placeholder B</b><br>Audio-only stimulation and waveform illustration.</div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-figure">
+            <img src="./assets/placeholder_dataset_task3.png" alt="Placeholder for Task 3 examples">
+          </div>
+          <div class="showcase-body"><b>Placeholder C</b><br>Reading prompt, transcript, and speech sample preview.</div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-figure">
+            <img src="./assets/placeholder_dataset_task4.png" alt="Placeholder for Task 4 examples">
+          </div>
+          <div class="showcase-body"><b>Placeholder D</b><br>Video-based social-emotional cognition examples.</div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-figure">
+            <img src="./assets/placeholder_dataset_task5.png" alt="Placeholder for Task 5 examples">
+          </div>
+          <div class="showcase-body"><b>Placeholder E</b><br>Interview UI, prompts, and response examples.</div>
+        </div>
+      </div>
+
+      <button class="slider-nav right" type="button" aria-label="Scroll right" onclick="scrollByCard('dataset-showcase-slider', 1)">&#8250;</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset-method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Dataset &amp; Method</h2>
+
+    <div class="content">
+      <p style="text-align:left;">
+        MMH is a clinically verified multimodal benchmark for <b>multi-disorder mental health assessment</b>.
+        The proposed method explicitly models the fact that different elicitation paradigms induce distinct emotional,
+        cognitive, and behavioral responses, then learns aligned video, audio, and text representations for final diagnosis.
+      </p>
+
+      <div class="dm-slider-wrap">
+        <button class="slider-nav left" type="button" aria-label="Scroll left" onclick="scrollByCard('dm-slider-1', -1)">&#8249;</button>
+
+        <div class="dm-slider" id="dm-slider-1">
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/placeholder_paradigm_overview.png" alt="Stimulus paradigm placeholder">
+            </div>
+            <div class="dm-cap"><b>(a) Stimulus Paradigm</b><br>Replace with the overview of the five-task psychology-inspired protocol.</div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/placeholder_dataset_statistics.png" alt="Dataset statistics placeholder">
+            </div>
+            <div class="dm-cap"><b>(b) Dataset Statistics</b><br>Replace with participant distribution, segment counts, or modality summary.</div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/placeholder_method_stage1.png" alt="Stage 1 placeholder">
+            </div>
+            <div class="dm-cap"><b>(c) Stage 1</b><br>Prompt-guided pretraining with Gemini-generated semantic descriptions and CLIP-style alignment.</div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/placeholder_method_stage2.png" alt="Stage 2 placeholder">
+            </div>
+            <div class="dm-cap"><b>(d) Stage 2</b><br>Multimodal joint training with audio, video, text, cross-attention, and classification fusion.</div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/placeholder_results_main.png" alt="Results placeholder">
+            </div>
+            <div class="dm-cap"><b>(e) Results</b><br>Replace with the main benchmark table or a clean performance summary figure.</div>
+          </div>
+        </div>
+
+        <button class="slider-nav right" type="button" aria-label="Scroll right" onclick="scrollByCard('dm-slider-1', 1)">&#8250;</button>
+      </div>
+
+      <p class="is-size-7 has-text-grey" style="margin-top:0.75rem;">
+        Suggested replacements: paradigm overview figure, dataset statistics table, the two-stage framework diagram, and the main comparison results.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Framework Highlights</h2>
+    <div class="columns is-multiline">
+      <div class="column is-6">
+        <div class="stage-card">
+          <p><b>Stage 1 · Prompt-guided Pretraining</b></p>
+          <p>
+            For each task, a multimodal LLM generates <b>paradigm-aware semantic descriptions</b> from the collected videos.
+            A video encoder is then pretrained by aligning visual representations with these descriptions through contrastive learning.
+          </p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="stage-card">
+          <p><b>Stage 2 · Multimodal Joint Training</b></p>
+          <p>
+            Task-specific video features are fused with <b>audio MFCC features</b> and <b>BERT-based text embeddings</b>.
+            Cross-attention and contrastive alignment jointly support multi-class classification over healthy, depression, anxiety, and schizophrenia.
+          </p>
+        </div>
+      </div>
+      <div class="column is-12">
+        <div class="stage-card">
+          <p><b>Core Design Choice</b></p>
+          <p>
+            The model is not only multimodal, but also <b>paradigm-aware</b>: it uses the semantic meaning of each elicitation task
+            to reduce ambiguity between clinically related disorders whose raw behavioral patterns may otherwise look similar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Main Results</h2>
+    <div class="columns is-multiline">
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Overall performance</b></p>
+          <p>Full AVT multimodal setting reaches <b>86.32 ACC</b> and <b>86.14 weighted-F1</b>, outperforming reproduced classical baselines and tested LLM/MLLM baselines.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Task ablation</b></p>
+          <p>Removing any elicitation task reduces performance; <b>MS-I</b> causes the largest drop, showing the importance of multisensory emotional stimuli.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Modality ablation</b></p>
+          <p><b>Audio</b> is the strongest single modality, while the full <b>A+V+T</b> configuration performs best overall.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="soft-box">
+          <p><b>Module ablation</b></p>
+          <p>Prompt-guided pretraining, cross-attention, and contrastive learning all contribute; removing cross-attention leads to a larger degradation than removing contrastive learning alone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <p class="is-size-7 has-text-grey">
+      Keep this placeholder citation until the final paper metadata is ready.
+    </p>
+<pre><code>@inproceedings{mmh2026,
+  title     = {Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimuli},
+  author    = {Anonymous Authors},
+  booktitle = {Anonymous Submission},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="./assets/placeholder_paper_link.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/placeholder/repo" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function scrollByCard(sliderId, direction){
+    const el = document.getElementById(sliderId);
+    if(!el) return;
+    const card = el.children && el.children.length ? el.children[0] : null;
+    const step = card ? (card.offsetWidth + 16) : 340;
+    el.scrollBy({ left: direction * step, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
