@@ -218,7 +218,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://example.com/mmh-dataset" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://???/mmh-dataset" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="far fa-images"></i></span>
                   <span>Dataset</span>
                 </a>
@@ -231,8 +231,7 @@
                  alt="Teaser placeholder for MMH project page."
                  style="max-width:64%;height:auto;border-radius:12px;border:1px solid rgba(0,0,0,0.08);" />
             <p class="is-size-7 has-text-grey" style="margin-top:0.65rem; max-width: 840px; margin-left:auto; margin-right:auto;">
-              A psychology-inspired multimodal stimulus paradigm supports differential detection of depression, anxiety, and schizophrenia,
-              while a paradigm-aware framework aligns video, audio, and text with prompt-guided semantic supervision.
+              Challenges in differential mental disorder detection andour solutions.
             </p>
           </div>
         </div>
@@ -248,11 +247,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We study <b>differential mental disorder detection</b> under clinically realistic settings where depression, anxiety,
-            and schizophrenia may present overlapping symptoms. To move beyond interview-only or reading-only protocols,
-            this work introduces a <b>psychology-inspired multimodal stimulus paradigm</b> and constructs the <b>MMH dataset</b>,
-            a clinically verified benchmark with synchronized video, audio, and text. We further propose a <b>paradigm-aware multimodal framework</b>
-            that uses prompt-guided semantic descriptions for pretraining and cross-modal interaction for final multi-disorder classification.
+            Differential diagnosis of mental disorders remains a fundamental challenge in real-world clinical practice, where multiple 
+            conditions often exhibit overlapping symptoms. However, most existing methods or datasets are developed under single-disorder 
+            settings and rely on limited data elicitation paradigms, restricting their ability to capture disorder-specific patterns. 
+            In this work, we investigate differential mental disorder detection through psychology-inspired multimodal stimuli, designed to 
+            elicit diverse emotional, cognitive, and behavioral responses grounded in findings from experimental psychology. Based on this paradigm, 
+            we collect a large-scale multimodal mental health dataset (MMH) covering depression, anxiety, and schizophrenia, with all diagnostic 
+            labels clinically verified by licensed psychiatrists. To effectively model the heterogeneous signals induced by different elicitation paradigms, 
+            we further propose a paradigm-aware multimodal framework, which leverages prompt-guided semantic descriptions to enhance representation learning 
+            across modalities. Extensive experiments show that our framework consistently outperforms existing baselines, under-scoring the value of psychology-grounded 
+            stimulus design for differential mental disorder detection. (Partial dataset samples and code are provided in the supplementary material.
           </p>
         </div>
       </div>
@@ -456,73 +460,6 @@
       <p class="is-size-7 has-text-grey" style="margin-top:0.75rem;">
         Suggested replacements: paradigm overview figure, dataset statistics table, the two-stage framework diagram, and the main comparison results.
       </p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Framework Highlights</h2>
-    <div class="columns is-multiline">
-      <div class="column is-6">
-        <div class="stage-card">
-          <p><b>Stage 1 · Prompt-guided Pretraining</b></p>
-          <p>
-            For each task, a multimodal LLM generates <b>paradigm-aware semantic descriptions</b> from the collected videos.
-            A video encoder is then pretrained by aligning visual representations with these descriptions through contrastive learning.
-          </p>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="stage-card">
-          <p><b>Stage 2 · Multimodal Joint Training</b></p>
-          <p>
-            Task-specific video features are fused with <b>audio MFCC features</b> and <b>BERT-based text embeddings</b>.
-            Cross-attention and contrastive alignment jointly support multi-class classification over healthy, depression, anxiety, and schizophrenia.
-          </p>
-        </div>
-      </div>
-      <div class="column is-12">
-        <div class="stage-card">
-          <p><b>Core Design Choice</b></p>
-          <p>
-            The model is not only multimodal, but also <b>paradigm-aware</b>: it uses the semantic meaning of each elicitation task
-            to reduce ambiguity between clinically related disorders whose raw behavioral patterns may otherwise look similar.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Main Results</h2>
-    <div class="columns is-multiline">
-      <div class="column is-6">
-        <div class="soft-box">
-          <p><b>Overall performance</b></p>
-          <p>Full AVT multimodal setting reaches <b>86.32 ACC</b> and <b>86.14 weighted-F1</b>, outperforming reproduced classical baselines and tested LLM/MLLM baselines.</p>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="soft-box">
-          <p><b>Task ablation</b></p>
-          <p>Removing any elicitation task reduces performance; <b>MS-I</b> causes the largest drop, showing the importance of multisensory emotional stimuli.</p>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="soft-box">
-          <p><b>Modality ablation</b></p>
-          <p><b>Audio</b> is the strongest single modality, while the full <b>A+V+T</b> configuration performs best overall.</p>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="soft-box">
-          <p><b>Module ablation</b></p>
-          <p>Prompt-guided pretraining, cross-attention, and contrastive learning all contribute; removing cross-attention leads to a larger degradation than removing contrastive learning alone.</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
