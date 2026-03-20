@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Depression Recognition With Arbitrary Gait Modalities: A Multi-Modal Dataset and a Unified Framework</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- Bulma -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Optional UI libs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.5/dist/css/bulma-slider.min.css">
+
+  <!-- Local styles/scripts (keep your original paths) -->
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/js/bulma-carousel.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.5/dist/js/bulma-slider.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+
+  <!-- MathJax (optional; safe even if you do not use formulas on the page) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            Depression Recognition With Arbitrary Gait Modalities: A Multi-Modal Dataset and a Unified Framework
+          </h1>
+
+          <!-- If your IJCAI source is anonymized, keep this as placeholder and edit later -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Authors</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Affiliations will be updated.</span>
+          </div>
+
+          <div class="is-size-6" style="margin-top: 0.5rem;">
+            <span class="tag is-light">IJCAI 2026</span>
+            <span class="tag is-light">Multi-modal Gait • Missing Modality • Knowledge Distillation</span>
+          </div>
+
+          <!-- Links -->
+          <div class="column has-text-centered" style="margin-top: 1.0rem;">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper (PDF)</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv (Coming soon)</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://github.com/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (Coming soon)</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="far fa-images"></i></span>
+                  <span>Dataset (Coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Teaser -->
+          <div class="teaser-img" style="margin-top: 1.25rem;">
+            <!-- Replace with your own teaser later; keeping a placeholder is fine -->
+            <img src="./assets/intro_01.png"
+                 alt="Teaser figure (placeholder)."
+                 style="max-width:60%;height:auto;" />
+            <p class="is-size-7 has-text-grey" style="margin-top:0.5rem;">
+              Existing RGB+Skeleton methods are highly sensitive to noise from silhouette/skeleton generation. 
+              Our framework leverages RGB, depth, and infrared with trust-driven hierarchical distillation for robust depression recognition under arbitrary modality combinations.
+            </p>
+          </div>
+
+      
+
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>Depression poses a major global public health challenge, highlighting the need for early and objective detection. Gait has emerged as a promising non-invasive behavioral indicator, yet existing gait-based approaches are limited by single-modality data and poor robustness to modality absence.
+To address these limitations, we construct a large-scale multi-modal gait dataset for depression recognition, incorporating RGB, depth, and infrared (IR) modalities to exploit their complementary strengths. Building upon this dataset, we propose a unified end-to-end framework that supports arbitrary modality combinations. 
+            The framework integrates a trust-driven hierarchical knowledge distillation strategy, where distillation weights are adaptively guided by the teacher’s learning state, enabling effective knowledge transfer at both modality and fusion levels without multi-stage training.
+Extensive experiments demonstrate the effectiveness and generalization of the proposed dataset and unified framework, establishing a practical and reliable solution for depression recognition under real-world modality-incomplete scenarios. The dataset and code are provided in the supplementary material.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Contributions -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Contributions</h2>
+    <div class="content">
+      <div class="columns is-multiline is-centered">
+        <div class="column is-5"><p class="has-text-centered">• <b>MGD dataset</b></p></div>
+        <div class="column is-5"><p class="has-text-centered">• <b>MIF module</b></p></div>
+        <div class="column is-5"><p class="has-text-centered">• <b>Unified inference under arbitrary modalities</b></p></div>
+        <div class="column is-5"><p class="has-text-centered">• <b>Trust-driven hierarchical KD</b></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Dataset & Method -->
+<section class="section" id="dataset-method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Multi-modal Gait Depression (MGD) Dataset &amp; Method</h2>
+
+    <div class="content">
+      <!-- Combined text -->
+      <!--h3 class="title is-5">Multi-modal Gait Depression (MGD) Dataset</h3-->
+      <p style="text-align: left;">
+        The MGD dataset is collected in an indoor corridor with synchronized ceiling-mounted RGB, infrared (IR), and depth sensors.
+        It contains recordings from <b>597 participants</b> and spans diverse real-world factors such as lighting variability.
+      </p>
+
+
+      <!-- Slider styles (scoped) -->
+      <style>
+        /* Slider container */
+        .dm-slider-wrap{
+          position: relative;
+          margin-top: 1.25rem;
+          padding: 0 2.75rem;   /* ✅ 留白放到 wrap 上 */
+          box-sizing: border-box;
+        }
+        .dm-slider{
+          display: flex;
+          gap: 1rem;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          padding: 0.5rem 0; /* leave room for arrows */
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none; /* Firefox hide */
+        }
+        .dm-slider::-webkit-scrollbar{ display:none; } /* Chrome hide */
+
+        /* Each card */
+        .dm-card{
+          flex: 0 0 auto;
+          width: 320px;        /* unified card width */
+        }
+        .dm-figure{
+          width: 100%;
+          height: 200px;       /* unified image height */
+          border-radius: 12px;
+          overflow: hidden;
+          background: #ffffff;
+        }
+        .dm-figure img{
+          width: 100%;
+          height: 100%;
+          object-fit: contain;   /* 等比例完整显示 */
+          object-position: center;   /* cover: fills box; use contain if you prefer no cropping */
+          display: block;
+        }
+        .dm-cap{
+          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          color: #7a7a7a;
+        }
+
+        /* Arrow buttons */
+        .dm-nav{
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 2.25rem;
+          height: 2.25rem;
+          border-radius: 999px;
+          border: 1px solid rgba(0,0,0,0.12);
+          background: rgba(255,255,255,0.95);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          user-select: none;
+        }
+        .dm-nav:hover{ background: #ffffff; }
+        .dm-nav.left{ left: 0.25rem; }
+        .dm-nav.right{ right: 0.25rem; }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px){
+          .dm-card{ width: 420px; }
+          .dm-figure{ height: 280px; }
+          .dm-slider{ padding-left: 2.5rem; padding-right: 2.5rem; }
+        }
+      </style>
+
+      <!-- Slider UI -->
+      <div class="dm-slider-wrap">
+        <button class="dm-nav left" type="button" aria-label="Scroll left"
+                onclick="dmScrollBy('dm-slider-1', -1)">
+          &#8249;
+        </button>
+
+        <div class="dm-slider" id="dm-slider-1">
+          <!-- Dataset images -->
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/gait_collection_blue_facing_yellow_1.png" alt="Dataset setup (placeholder)">
+            </div>
+            <div class="dm-cap">(a) Data acquisition setup</div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/alldata_01.png" alt="Modality examples (placeholder)">
+            </div>
+            <div class="dm-cap">(b) RGB / IR / depth / Skeleton examples</div>
+          </div>
+
+          <!-- Method images -->
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/Overview_01.png" alt="Overall framework (placeholder)">
+            </div>
+            <div class="dm-cap">(c) Overall framework </div>
+          </div>
+
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/MIF_01.png" alt="MIF module (placeholder)">
+            </div>
+            <div class="dm-cap">(d) MIF module </div>
+          </div>
+
+          <!-- You can add more cards here -->
+          <!--
+          <div class="dm-card">
+            <div class="dm-figure">
+              <img src="./assets/xxx_distill.png" alt="Distillation (placeholder)">
+            </div>
+            <div class="dm-cap">Distillation (placeholder): <code>./assets/xxx_distill.png</code></div>
+          </div>
+          -->
+        </div>
+
+        <button class="dm-nav right" type="button" aria-label="Scroll right"
+                onclick="dmScrollBy('dm-slider-1', 1)">
+          &#8250;
+        </button>
+      </div>
+
+      <p class="is-size-7 has-text-grey" style="margin-top:0.75rem;">
+        (a) Data acquisition setup and gait collection protocol of the MGD dataset.
+        (c)Overview of the proposed end-to-end multimodal knowledge distillation framework for depression detection under missing-modality settings.
+        (d)Architecture of the Modality Interaction and Fusion Module.
+      </p>
+
+      <!-- Slider JS (put once; safe if you keep only one copy) -->
+      <script>
+        function dmScrollBy(sliderId, direction){
+          const el = document.getElementById(sliderId);
+          if(!el) return;
+          // Scroll roughly by 1 card width (+gap), responsive-friendly
+          const card = el.querySelector('.dm-card');
+          const step = card ? (card.offsetWidth + 16) : 340;
+          el.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+      </script>
+    </div>
+  </div>
+</section>
+
+          
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <p class="is-size-7 has-text-grey">
+      Replace <code>Anonymous Authors</code> and update the final citation fields once the paper is publicly available.
+    </p>
+    <pre><code>@inproceedings{mgd2026,
+  title     = {Depression Recognition With Arbitrary Gait Modalities: A Multi-Modal Dataset and a Unified Framework},
+  author    = {Anonymous Authors},
+  booktitle = {Proceedings of the {&quot;IJCAI&quot;} 2026},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- SEO：页面简要描述 -->
+  <meta name="description" content="">
+  <!-- SEO：关键词 -->
+  <meta name="keywords" content="Cinemagraph">
+  <!-- 让移动端可以自适应宽度 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 页面标题（浏览器标签栏显示） -->
+  <title>LoopGaussian: Creating 3D Cinemagraph with Multi-view Images via Eulerian Motion Field</title>
+
+  <!-- 谷歌统计（可选，不需要统计可删除） -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    /* Google Analytics 初始化 */
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL'); /* 用你的 GA ID 替换 */
+  </script>
+
+  <!-- Google Fonts 字体（可选） -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- 样式：Bulma 框架与本地样式（index.css） -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css"> <!-- 轮播扩展（下面 results-carousel 用到） -->
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">   <!-- 滑块扩展（本页未用，可移除） -->
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> <!-- 本地打包的 Font Awesome -->
+  <!-- academicons（arXiv 等学术图标库，可选） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">              <!-- 你自己的样式补充 -->
+  <link rel="icon" href="./static/images/favicon.svg">               <!-- 网站 favicon 图标 -->
+
+  <!-- JS 依赖：jQuery + Bulma 扩展 + 自定义逻辑 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- defer：等 HTML 解析完再执行 -->
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script> <!-- 你自定义的初始化代码：比如激活 carousel -->
+</head>
+<body>
+
+<!--
+  顶部导航（已注释掉）
+  - Bulma 的 navbar 结构；目前页面不用导航，所以整体被注释
+  - 如果你要启用，去掉注释即可
+-->
+<!--
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  ...
+</nav>
+-->
+
+<!-- 顶部 Hero 标题区：标题 + 作者 + 链接按钮 -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <!-- 标题 -->
+          <h1 class="title is-1 publication-title">
+            LoopGaussian: Creating 3D Cinemagraph with Multi-view Images via Eulerian Motion Field
+          </h1>
+
+          <!-- 作者行 -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Jiyang Li<sup>1*</sup>,
+            </span>
+            <span class="author-block">
+              <!-- 作者主页示例 -->
+              <a href="https://scholar.google.com/citations?user=PKFAv-cAAAAJ&hl=en">Lechao Cheng</a><sup>2*</sup>,
+            </span>
+            <span class="author-block">
+              Zhangye Wang<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Tingting Mu<sup>3</sup>,
+            </span>
+            <span class="author-block">
+              Jingxuan He<sup>2✉</sup>
+            </span>
+          </div>
+
+          <!-- 机构行 -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Zhejiang University,</span>
+            <span class="author-block"><sup>2</sup>Hefei University of Technology,</span>
+            <span class="author-block"><sup>3</sup>The University of Manchester</span>
+          </div>
+          <!-- 贡献/通讯说明 -->
+          *Equal contribution, ✉Corresponding author
+
+          <!-- 资源按钮 -->
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF 按钮 -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2404.08966"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- arXiv 按钮 -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2404.08966"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Code（占位） -->
+              <span class="link-block">
+                <a href="https://github.com/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code(Coming soon)</span>
+                </a>
+              </span>
+
+              <!-- Data（占位） -->
+              <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="far fa-images"></i></span>
+                  <span>Data(Coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div> <!-- /column -->
+      </div>   <!-- /columns -->
+    </div>     <!-- /container -->
+  </div>       <!-- /hero-body -->
+</section>
+
+<!-- 大图/视频 Teaser：页面“封面”演示（自动播放、静音、循环） -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4" type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">LoopGaussian</span> convert multi-view images ...
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- 结果轮播：需要 bulma-carousel.min.css/js 支撑 -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <!-- 每个 item 是一个视频（自动播放/循环/静音） -->
+        <div class="item item-skull">
+          <video poster="" id="skull" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/skull.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-lfc">
+          <video poster="" id="kfc" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/kfc.mp4" type="video/mp4">
+          </video>
+        </div>
+        <!-- 省略若干 item ... -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract 区块 -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Cinemagraph is a unique form ... （摘要正文）
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 下面这个 Paper video 块被注释掉了，如需嵌 YouTube，可启用 -->
+    <!--
+    <div class="columns is-centered has-text-centered">
+      ...
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- 比较视频（Comparisons） -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="column is-full-width"></div>
+    <h2 class="title is-3">Comparisons</h2>
+    <div class="column content">
+      <p>LoopGaussian (below) vs. <a href="...">3D Cinemagraph</a> (above)</p>
+      <video poster="" id="ficus" autoplay controls muted loop playsinline height="100%">
+        <source src="./static/videos/comparisons.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Novel View Synthesis（新视角渲染） -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="column is-full-width"></div>
+    <h2 class="title is-3">Novel view synthesis</h2>
+    <div class="column content">
+      <p>3D Cinemagraph generated ...</p>
+      <video poster="" id="ficus" autoplay controls muted loop playsinline height="100%">
+        <source src="./static/videos/ficus_nvs.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Optical Flow Maps（光流图） -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="column is-full-width"></div>
+    <h2 class="title is-3">Optical Flow Maps</h2>
+    <div class="column content">
+      <p>The rendering results and corresponding optical flow maps.</p>
+      <video poster="" id="ficus" autoplay controls muted loop playsinline height="100%">
+        <source src="./static/videos/optical.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{li2024loop,
+  author    = {Jiyang Li and ...},
+  title     = {LoopGaussian: ...},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+<!-- 页脚：图标 + 致谢 -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- 论文 PDF 图标 -->
+      <a class="icon-link" href="./static/videos/loopgaussian_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <!-- GitHub 图标（占位） -->
+      <a class="icon-link" href="https://github.com/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Thanks to <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for the template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- 视口：移动端自适应 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MGFKD: Multi-modal Gait Fusion with Knowledge Distillation for Depression Recognition</title>
+  <meta name="description" content="Project page for MGFDK. Clean, single-file template for GitHub Pages." />
+  <!-- 网页图标：替换为你自己的 assets/favicon.png -->
+  <link rel="icon" href="./assets/favicon.png" />
+
+  <style>
+    /* =========================
+       主题变量（浅色模式）
+       - 想改背景色就改 --bg
+       - 想改文字主色就改 --fg
+       - 想改品牌色就改 --brand / --brand-2
+       ========================= */
+    :root{
+      --bg: #ffffff;      /* ← 页面背景色（浅色）*/
+      --fg: #0f172a;      /* 主文字颜色 */
+      --muted: #475569;   /* 次要文字颜色 */
+      --soft: #f1f5f9;    /* 浅色块背景 */
+      --line: #e2e8f0;    /* 分割线颜色 */
+      --brand: #2563eb;   /* 品牌主色 */
+      --brand-2: #0ea5e9; /* 品牌辅色（很少用到）*/
+      --card: #ffffff;    /* 卡片背景 */
+      --code: #111827;    /* 代码文字颜色 */
+    }
+
+    /* =========================
+       深色模式（跟随系统）
+       - 深色背景改这里的 --bg
+       ========================= */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1020;     /* ← 页面背景色（深色）*/
+        --fg:#e5e7eb;
+        --muted:#94a3b8;
+        --soft:#0f172a;
+        --line:#1f2937;
+        --card:#0d1326;
+        --brand:#60a5fa;
+        --brand-2:#38bdf8;
+        --code:#e5e7eb;
+      }
+    }
+
+    /* 全局基础样式 */
+    html,body{
+      margin:0;padding:0;
+      background:var(--bg); /* ← 背景实际应用点 */
+      color:var(--fg);
+      font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* 页面最大宽度容器 */
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    /* 置顶导航条 */
+    .nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+    .nav .container{display:flex;align-items:center;gap:20px;justify-content:space-between;height:60px}
+    .brand{font-weight:700;letter-spacing:.2px}
+    .nav a{color:var(--fg)}
+    .nav ul{display:flex;gap:16px;list-style:none;padding:0;margin:0}
+
+    /* 通用按钮样式 */
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border:1px solid var(--line);
+      border-radius:10px;background:var(--card);color:var(--fg);
+      text-decoration:none;font-weight:600
+    }
+    .btn:hover{border-color:var(--brand)}
+
+    /* 顶部区（论文题目、作者、按钮） */
+    .hero{padding:60px 0 24px}
+    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0}
+
+    /* 小药丸标签（Preprint 之类） */
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      border:1px solid var(--line);background:var(--soft);
+      padding:6px 10px;border-radius:999px;font-size:14px;color:var(--muted)
+    }
+
+    /* 作者行 */
+    .author-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .author-row a{color:var(--fg)}
+
+    /* 顶部按钮区（Paper / Code / Demo） */
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+    /* 顶部预览图/视频卡片 */
+    .teaser{margin:28px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+    .teaser img,.teaser video{width:100%;display:block}
+
+    /* 普通章节 */
+    section{padding:38px 0;border-top:1px solid var(--line)}
+    section h2{font-size:clamp(22px,2.6vw,30px);line-height:1.2;margin:0 0 12px}
+
+    /* 2列栅格（文字+卡片、两张图并排等） */
+    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr}}
+
+    /* 图片卡片与图注 */
+    figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+    figcaption{padding:10px 12px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+
+    /* 通用卡片 */
+    .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card)}
+
+    /* 列表 */
+    .list{padding-left:18px;margin:0}
+    .list li{margin:6px 0}
+
+    /* 代码块（引用文献 BibTeX 用） */
+    pre{margin:0;background:var(--soft);color:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    /* 页脚 */
+    .footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+
+    /* 小徽章样式（页脚用） */
+    .kbd{font:600 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New";
+         border:1px solid var(--line);background:var(--soft);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+
+<body>
+  <!-- ============ 顶部导航 ============ -->
+  <nav class="nav">
+    <div class="container">
+      <!-- 左侧品牌名（点击回到顶部） -->
+      <a class="brand" href="#top">MGFDK</a>
+      <!-- 右侧锚点导航：跳转到页面各部分 -->
+      <ul>
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#resources">Code & Data</a></li>
+        <li><a href="#citation">Citation</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============ 主体内容容器 ============ -->
+  <main id="top" class="container">
+
+    <!-- ===== HERO（标题/作者/按钮/封面图） ===== -->
+    <section class="hero" aria-label="header">
+      <!-- 左上角状态标签（可改为 Accepted @ XXX 之类） -->
+      <span class="pill">Preprint · 2025</span>
+
+      <!-- 论文标题（可自行修改） -->
+      <h1>MGFKD: Multi-modal Gait Fusion with Knowledge Distillation for Depression Recognition</h1>
+
+      <!-- 作者行：按需替换为作者名，链接到主页/谷歌学术等 -->
+      <div class="author-row">
+        <a href="#">Author A</a>, <a href="#">Author B</a>, <a href="#">Author C</a>
+      </div>
+
+      <!-- 操作按钮：PDF/代码/演示（修改 href 即可） -->
+      <div class="actions">
+        <!-- Paper 按钮：把 ./assets/paper.pdf 换成你的论文 PDF 路径 -->
+        <a class="btn" href="./assets/paper.pdf" target="_blank">📄 Paper (PDF)</a>
+        <!-- Code 按钮：替换为你的 GitHub 仓库地址 -->
+        <a class="btn" href="https://github.com/yourname/mgfdk-project-page" target="_blank">⭐ Code</a>
+        <!-- Demo 按钮：跳到页面内 #demo 区域，或外链到在线演示 -->
+        <a class="btn" href="#demo">▶️ Demo</a>
+      </div>
+
+      <!-- 顶部封面图/短视频：替换文件路径与名称 -->
+      <div class="teaser" style="margin-top:18px">
+        <!-- 建议使用相对路径：./assets/teaser.jpg；确保文件已放在仓库的 assets 目录 -->
+        <img src="./assets/teaser.jpg" alt="MGFDK Teaser" />
+      </div>
+    </section>
+
+    <!-- ===== 摘要 ===== -->
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <div class="grid-2">
+        <!-- 左列：摘要文字 -->
+        <p>
+         Depression, as a prevalent mental health disorder, requires an efficient, objective, and scalable approach to automated recognition.This paper presents a novel depression recognition framework named MGFKD (Multi-modal Gait Fusion with Knowledge Distillation), which jointly models RGB, infrared (IR) and depth gait data. MGFKD takes temporal gait templates as input and employs modality-specific subnetworks to extract features independently. These multi-modal features are concatenated along the channel dimension and further refined through a Transformer-based fusion module to enhance high-level representation learning. To effectively handle modality-missing scenarios, a parallel training mechanism for bi-modal and tri-modal configurations is introduced. Additionally, a knowledge distillation (KD) strategy based on minimizing the mean squared error between optimized features is incorporated to improve performance under bi-modal input conditions. Experimental results on a gait dataset comprising 300 healthy, 200 subthreshold, and 97 depressed individuals demonstrate the effectiveness of MGFKD in three-class depression recognition tasks, with superior performance in binary classification settings. Furthermore, a series of ablation studies validate the effectiveness of the proposed architectural components and training strategies.
+        </p>
+
+        <!-- 右列：亮点卡片（可按需增删条目） -->
+        <div class="card">
+          <strong>Highlights</strong>
+          <ul class="list">
+            <li>Robust to missing modalities</li>
+            <li>ResNet-50 encoders + Transformer head</li>
+            <li>Simple MSE guidance across modes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 方法（框架图） ===== -->
+    <section id="method">
+      <h2>Method</h2>
+      <figure>
+        <!-- 框架图路径：确保文件名与大小写准确（GitHub Pages 静态托管对大小写敏感） -->
+        <img src="./assets/framework.png" alt="Framework diagram" />
+        <figcaption>
+          Overall pipeline: preprocessing → per-modality encoders → fusion → Transformer head → classifier;
+          cross-mode MSE guidance encourages bi-modal features to align with tri-modal ones.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== 结果（图片并排示例） ===== -->
+    <section id="results">
+      <h2>Results</h2>
+      <div class="grid-2">
+        <figure>
+          <img src="./assets/quantitative.png" alt="Quantitative results" />
+          <figcaption>Quantitative performance across modalities.</figcaption>
+        </figure>
+        <figure>
+          <img src="./assets/ablation.png" alt="Ablation studies" />
+          <figcaption>Ablation on fusion and guidance losses.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== Demo（可选：嵌入视频） ===== -->
+    <section id="demo">
+      <h2>Demo</h2>
+      <figure>
+        <!-- MP4/WebM 建议短小，避免太大影响加载；或外链到 YouTube/Bilibili -->
+        <video src="./assets/demo.mp4" controls preload="metadata"></video>
+        <figcaption>Short qualitative demo (optional).</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== 资源链接 ===== -->
+    <section id="resources">
+      <h2>Code & Resources</h2>
+      <div class="actions">
+        <!-- 替换为训练代码仓库 -->
+        <a class="btn" href="https://github.com/yourname/mgfdk" target="_blank">GitHub · Training</a>
+        <!-- 本页面的仓库 -->
+        <a class="btn" href="https://github.com/yourname/mgfdk-project-page" target="_blank">GitHub · This Page</a>
+        <!-- 模型权重（如放在 Hugging Face） -->
+        <a class="btn" href="https://huggingface.co/yourname/mgfdk" target="_blank">🤗 Weights</a>
+        <!-- 补充材料 PDF -->
+        <a class="btn" href="./assets/supplementary.pdf" target="_blank">Supplementary</a>
+      </div>
+    </section>
+
+    <!-- ===== 引用（BibTeX） ===== -->
+    <section id="citation">
+      <h2>Citation</h2>
+      <!-- 把条目替换成你论文的真实 BibTeX -->
+      <pre><code>@article{your2025mgfdk,
+  title   = {MGFKD: Multi-modal Gait Fusion with Knowledge Distillation for Depression Recognition},
+  author  = {Your Name and Others},
+  journal = {arXiv preprint arXiv:2501.xxxxx},
+  year    = {2025}
+}</code></pre>
+    </section>
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="badges">
+        <span class="kbd">GitHub Pages</span>
+        <span class="kbd">Single-file</span>
+        <span class="kbd">Responsive</span>
+      </div>
+      <div style="margin-top:10px">© 2025 MGFDK Authors</div>
+    </div>
+  </footer>
+
+  <!-- 可选 JS（目前留空；如果以后要做滚动动画或复制按钮，可以加在这里）-->
+  <script>
+    (function(){
+      // 留空：页面核心功能不依赖 JS
+    })();
+  </script>
+</body>
+</html>
+
+
+head里面的内容：
+  <meta charset="utf-8">
+  <!-- SEO：页面简要描述 -->
+  <meta name="description" content="">
+  <!-- SEO：关键词 -->
+  <meta name="keywords" content="Cinemagraph">
+  <!-- 让移动端可以自适应宽度 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- 页面标题（浏览器标签栏显示） -->
+  <title>MGFKD: Multi-modal Gait Fusion with Knowledge Distillation for Depression Recognition</title>
+
+  <!-- 谷歌统计（可选，不需要统计可删除） -->
+  <script async src=""></script>
+  <script>
+    /* Google Analytics 初始化 */
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL'); /* 用你的 GA ID 替换 */
+  </script>
+
+  <!-- Google Fonts 字体（可选） -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- 样式：Bulma 框架与本地样式（index.css） -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css"> <!-- 轮播扩展（下面 results-carousel 用到） -->
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">   <!-- 滑块扩展（本页未用，可移除） -->
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> <!-- 本地打包的 Font Awesome -->
+  <!-- academicons（arXiv 等学术图标库，可选） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">              <!-- 你自己的样式补充 -->
+  <link rel="icon" href="./static/images/favicon.svg">               <!-- 网站 favicon 图标 -->
+
+  <!-- JS 依赖：jQuery + Bulma 扩展 + 自定义逻辑 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- defer：等 HTML 解析完再执行 -->
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script> <!-- 你自定义的初始化代码：比如激活 carousel -->
+
+</body>
+</html>
