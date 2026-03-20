@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Depression Recognition With Arbitrary Gait Modalities: A Multi-Modal Dataset and a Unified Framework</title>
+  <title>Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimu</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
@@ -48,7 +48,7 @@
         <div class="column has-text-centered">
 
           <h1 class="title is-1 publication-title">
-            Depression Recognition With Arbitrary Gait Modalities: A Multi-Modal Dataset and a Unified Framework
+            Differential Mental Disorder Detection with Psychology-Inspired Multimodal Stimu
           </h1>
 
           <!-- If your IJCAI source is anonymized, keep this as placeholder and edit later -->
